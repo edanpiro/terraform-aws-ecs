@@ -1,11 +1,3 @@
-variable "subnet_private_cidr" {
-  type = "list"
-}
-
-variable "subnet_private_zone" {
-  type = "list"
-}
-
 variable "subnet_public_cidr" {
   type = "list"
 }

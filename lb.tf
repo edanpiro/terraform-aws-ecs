@@ -25,7 +25,7 @@ resource "aws_security_group" "web_inbound" {
   }
 
   tags {
-    Name = "pse-web inbound"
+    Name = "web inbound"
   }
 }
 
@@ -54,7 +54,7 @@ resource "aws_alb" "load_balancer" {
 
 resource "aws_alb_listener" "alb_listener" {
   load_balancer_arn = "${aws_alb.load_balancer.arn}"
-  port             = "8001"
+  port             = "80"
   protocol         = "HTTP"
 
   default_action {

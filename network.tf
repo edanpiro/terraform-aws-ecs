@@ -26,16 +26,6 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-resource "aws_eip" "ip_nat" {
-  vpc = true
-}
-
-resource "aws_nat_gateway" "nat_ip" {
-  allocation_id = "${aws_eip.ip_nat.id}"
-  subnet_id     = "${element(aws_subnet.backend.*.id, 0)}"
-  depends_on    = ["aws_internet_gateway.gw"]
-}
-
 resource "aws_route_table" "route_public" {
   vpc_id = "${aws_vpc.default.id}"
   
@@ -53,17 +43,4 @@ resource "aws_route_table_association" "route_public" {
   count          = "${length(var.subnet_public_zone)}"
   subnet_id      = "${element(aws_subnet.backend.*.id, count.index)}"
   route_table_id = "${aws_route_table.route_public.id}"
-}
-
-resource "aws_route_table" "route_private" {
-  vpc_id = "${aws_vpc.default.id}"
-  
-  route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = "${aws_nat_gateway.nat_ip.id}"
-  }
-
-  tags {
-    Name = "pse Public subnet"
-  }
 }

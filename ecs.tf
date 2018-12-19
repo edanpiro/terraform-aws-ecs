@@ -19,7 +19,7 @@ resource "aws_ecs_service" "service_api_document" {
   load_balancer {
     target_group_arn = "${aws_alb_target_group.lb_target_service.arn}"
     container_name   = "api-document"
-    container_port   = 8001
+    container_port   = 80
   }
 
 }
